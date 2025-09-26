@@ -2,20 +2,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
+    
     public static void main(String... args) {
-
         final int NUMERO_SIMULACOES = 1000;
         final List<Double> mediasAtendimento = new ArrayList<>();
 
         SimulacaoCaixaSupermercado simulador = new SimulacaoCaixaSupermercado();
 
-        for (int i = 0; i < NUMERO_SIMULACOES; i++) {
-            simulador.setNumeroCaixas(1);
-            simulador.setMediaAtendimentos(100);
-            simulador.setMediaTempoAtendimentoPorCliente(5.00);
-            simulador.setDesvioPadraoTempoAtendimentoPorCliente(0.50);
+        simulador.setNumeroCaixas(1);
+        simulador.setNumeroAtendimentosPorCaixa(100);
+        simulador.setMediaTempoAtendimentoPorCliente(5.00);
+        simulador.setDesvioPadraoTempoAtendimentoPorCliente(0.50);
 
+        for (int i = 0; i < NUMERO_SIMULACOES; i++) {
             double mediaAtendimento = simulador.simular();
             mediasAtendimento.add(mediaAtendimento);
         }
@@ -23,8 +22,7 @@ public class Main {
         double media = media(mediasAtendimento);
         double dp = desvioPadrao(mediasAtendimento, media);
 
-        System.out.printf("Média dos tempos de atendimento (%.0f simulações): %.3f min%n",
-                (double) NUMERO_SIMULACOES, media);
+        System.out.printf("Média dos tempos de atendimento (%.0f simulações): %.3f min%n", (double) NUMERO_SIMULACOES, media);
         System.out.printf("Desvio-padrão das médias: %.3f min%n", dp);
     }
 
@@ -40,4 +38,6 @@ public class Main {
             double d = x - m;
             s2 += d * d;
         }
-        return Math.sqrt(s2 / (xs.
+        return Math.sqrt(s2 / (xs.size() - 1));
+    }
+}
