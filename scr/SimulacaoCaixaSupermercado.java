@@ -1,7 +1,7 @@
 public class SimulacaoCaixaSupermercado {
-
+    
     private int numeroCaixas;
-    private int mediaAtendimentos;
+    private int numeroAtendimentosPorCaixa;
     private double mediaTempoAtendimentoPorCliente;
     private double desvioPadraoTempoAtendimentoPorCliente;
 
@@ -9,34 +9,25 @@ public class SimulacaoCaixaSupermercado {
 
     private final java.util.Random rng = new java.util.Random(42);
 
-    public void setNumeroCaixas(int n) { 
-        this.numeroCaixas = n; 
-    }
-
-    public void setMediaAtendimentos(int n) { 
-        this.mediaAtendimentos = n; 
-    }
-
-    public void setMediaTempoAtendimentoPorCliente(double mu) {
-        this.mediaTempoAtendimentoPorCliente = mu;
-    }
-
-    public void setDesvioPadraoTempoAtendimentoPorCliente(double sigma) {
-        this.desvioPadraoTempoAtendimentoPorCliente = sigma;
-    }
+    public void setNumeroCaixas(int n) { this.numeroCaixas = n; }
+    public void setNumeroAtendimentosPorCaixa(int n) { this.numeroAtendimentosPorCaixa = n; }
+    public void setMediaTempoAtendimentoPorCliente(double mu) { this.mediaTempoAtendimentoPorCliente = mu; }
+    public void setDesvioPadraoTempoAtendimentoPorCliente(double sigma) { this.desvioPadraoTempoAtendimentoPorCliente = sigma; }
 
     private double tempoAtendimentoNormalTruncado() {
+        
         double z = rng.nextGaussian();
-        double s = mediaTempoAtendimentoPorCliente +
-                   desvioPadraoTempoAtendimentoPorCliente * z;
+        double s = mediaTempoAtendimentoPorCliente + desvioPadraoTempoAtendimentoPorCliente * z;
         return (s < TEMPO_MINIMO_ATENDIMENTO) ? TEMPO_MINIMO_ATENDIMENTO : s;
     }
 
     public double simular() {
         double soma = 0.0;
-        for (int i = 0; i < mediaAtendimentos; i++) {
+        for (int i = 0; i < numeroAtendimentosPorCaixa; i++) {
             soma += tempoAtendimentoNormalTruncado();
         }
-        return soma / mediaAtendimentos;
+        
+        return soma / numeroAtendimentosPorCaixa;
     }
 }
+
